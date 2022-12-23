@@ -1,0 +1,23 @@
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+
+.mainHomePagePhoto {
+    position: relative;
+}
+
+.mainHomePagePhoto img {
+    margin-top: 10px;
+    max-width: 100%;
+    width: 100%;
+}
+
+.mainHomePagePhoto .coverText {
+    position: absolute;
+    color: #5A5494;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mainHomePagePhoto h3 {
+    font-family: "Poiret", sans-serif italic;
+}

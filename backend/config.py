@@ -45,7 +45,7 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     """Statement for enabling the development environment"""
     # Define the database - we are working with
-    SQLALCHEMY_DATABASE_URI = "postgresql://test_user:test_user@localhost:5432/homie"
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:Qwedvord123vlad@localhost:5432/homie"
     DEBUG = True
     FLATCOKE = "development"
     S3_BUCKET = "lazoryktrust"

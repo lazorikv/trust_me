@@ -2,7 +2,7 @@
 import uuid
 from flask import (Blueprint, request, jsonify, make_response)
 import jwt
-from flask_expects_json import expects_json
+from app.auth.utils import token_required
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import current_app
 from app import db
@@ -100,6 +100,12 @@ def change_password(user_id):
     return make_response('Old password is incorrect!', 401, {'WWW-Authenticate': 'Basic-realm= "No user found!"'})
 
 
-@mod.route("/time", methods=["GET"])
-def time():
-    return make_response({"time": 'Could not verify password!'}, 200)
+@mod.route("/profile", methods=["GET"])
+@token_required
+def time(current_user):
+    if current_user.__str__() == "Landlord":
+        return LandlordGetSchema().dump(current_user)
+    elif current_user.__str__() == "Tenant":
+        return TenantGetSchema().dump(current_user)
+    else:
+        return make_response('Bad request!', 401, {'WWW-Authenticate': 'Basic-realm= "No user found!"'})

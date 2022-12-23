@@ -1,0 +1,19 @@
+.title {
+    margin-top: 90px;
+    margin-bottom: 50px;
+    color: #5A5494;
+}
+
+.articleText {
+    line-height: 200%;
+    color: #590696;
+}
+
+.articleItem {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.articleItem img {
+    width: 100%;
+}

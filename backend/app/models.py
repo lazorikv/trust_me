@@ -40,6 +40,9 @@ class Tenant(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    def __str__(self):
+        return "Tenant"
+
 
 class Landlord(db.Model):
     __tablename__ = 'landlord'
@@ -61,6 +64,9 @@ class Landlord(db.Model):
 
     def __repr__(self):
         return self
+
+    def __str__(self):
+        return "Landlord"
 
 
 class Apartment(db.Model):

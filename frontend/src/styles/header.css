@@ -1,0 +1,91 @@
+header {
+    height: 90px;
+    width: 100%;
+    background-color: #6E4D8F;
+    color: black;
+}
+
+.header-status {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.header-status .logo {
+    cursor: pointer;
+    width: 90px;
+    border-radius: 50%;
+    margin-left: 40px;
+}
+
+.header-status .navigation {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.header-status .navigation a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #cdcbdf;
+}
+
+.header-status .userIcon {
+    margin-right: 50px;
+}
+
+.header-status .userIcon .button {
+    color: black;
+    background-color: #F7EAD9;
+}
+
+.header-status .userIcon img {
+    width: 40px;
+    cursor: pointer;
+    margin-right: 35px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.menu {
+    position: absolute;
+    list-style-type: none;
+    margin: 5px 0;
+    padding: 0;
+    border: 1px solid grey;
+    width: 135px;
+    z-index: 1;
+}
+
+.menu > li {
+    display: flex;
+    height: 30px;
+    padding-left: 5px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    background-color: white;
+    cursor: pointer;
+}
+
+.menu > li:hover {
+    background-color: lightblue;
+}
+
+.menu > li > button {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    background: none;
+    color: inherit;
+    border: none;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
