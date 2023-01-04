@@ -6,6 +6,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import HomeScreen from './screens/home/HomeScreen'
 import ProtectedRoute from './features/user/ProtectedRoute'
 import './App.css'
+import {Footer} from "./components/Footer";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     </Route>
                 </Routes>
             </main>
+            <Footer/>
         </Router>
     )
 }

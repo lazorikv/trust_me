@@ -36,6 +36,7 @@ const Header = () => {
 
     const handleDropDown = (item) => {
         if (item === "Profile") {
+            setOpen(false)
             navigate("/user-profile")
         } else if (item === "Log Out") {
             dispatch(logout())

@@ -7,13 +7,18 @@
 .articleText {
     line-height: 200%;
     color: #590696;
+    text-align: justify;
 }
 
-.articleItem {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+.articleText:after {
+    content: "";
+    display: inline-block;
+    width: 100%;
 }
 
 .articleItem img {
-    width: 100%;
+    width: 350px;
+    float: right;
+    margin-left: 30px;
 }
+
