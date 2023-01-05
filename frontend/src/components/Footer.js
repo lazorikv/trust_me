@@ -1,9 +1,11 @@
-import "../styles/footer.css"
+import "../styles/footer.css";
 
 export const Footer = () => {
-    return (
-        <footer>
-            <p>© 2022-2023 Homie Inc.</p>
-        </footer>
-    )
-}
+  return (
+    <footer>
+      <div className="developer">
+        <p>© 2022-2023 Homie Inc.</p>
+      </div>
+    </footer>
+  );
+};

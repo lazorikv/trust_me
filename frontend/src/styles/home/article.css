@@ -1,24 +1,29 @@
 .title {
-    margin-top: 90px;
-    margin-bottom: 50px;
-    color: #5A5494;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 90px;
+  margin-bottom: 50px;
+  color: #5a5494;
+  background: #dad8ea;
+  height: 140px;
 }
 
 .articleText {
-    line-height: 200%;
-    color: #590696;
-    text-align: justify;
+  line-height: 200%;
+  color: #590696;
+  text-align: justify;
 }
 
 .articleText:after {
-    content: "";
-    display: inline-block;
-    width: 100%;
+  content: "";
+  display: inline-block;
+  width: 100%;
 }
 
 .articleItem img {
-    width: 350px;
-    float: right;
-    margin-left: 30px;
+  width: 350px;
+  float: right;
+  margin-left: 30px;
 }
-

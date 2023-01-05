@@ -1,9 +1,5 @@
-footer {
-    display: flex;
-    justify-content: center;
-    padding: 5px;
-    background-color: #6E4D8F;
-    color: #cdcbdf;
-    height: 300px;
-    cursor: default;
+.developer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
