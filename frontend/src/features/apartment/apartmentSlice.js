@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createApartment, getApartment } from "./apartmentAction";
+import {
+  createApartment,
+  getApartment,
+  getAllApartments,
+} from "./apartmentAction";
 
 const initialState = {
   loading: false,
@@ -37,6 +41,18 @@ const apartmentSlice = createSlice({
       state.getApartById.push(payload);
     },
     [getApartment.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
+    [getAllApartments.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [getAllApartments.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.apartments.push(payload);
+    },
+    [getAllApartments.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
     },

@@ -1,3 +1,61 @@
 .search {
   margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.searchMain input {
+  position: relative;
+  width: 500px;
+  height: 40px;
+  border: 1px solid #6e4d8f;
+  border-radius: 5px;
+  text-indent: 10px;
+  font-size: 20px;
+}
+
+.dropDown {
+  position: absolute;
+}
+ul {
+  list-style-type: none;
+}
+
+.dropDown button {
+  width: 500px;
+  height: 30px;
+  margin-top: 4px;
+  text-align: left;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid #6e4d8f;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.dropDown button:hover {
+  background: #cdcbdf;
+}
+
+.search-btn {
+}
+.search-btn button {
+  width: 100px;
+  height: 40px;
+  margin-left: 5px;
+  border-radius: 5px;
+  border: 1px solid #6e4d8f;
+  background: #6e4d8f;
+  color: #cdcbdf;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.search-btn button:hover {
+  background: #ae81db;
+  color: #6e4d8f;
+}
+
+.search-btn button:active {
+  background: #cdcbdf;
 }

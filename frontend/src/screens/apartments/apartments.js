@@ -1,7 +1,13 @@
 import "../../styles/apartments/apartments.css";
 import PredictionsOnFormSubmission from "./Search";
+import ApartmentResult from "./ApartmentResult";
 const ApartmentsScreen = () => {
-  return <PredictionsOnFormSubmission />;
+  return (
+    <>
+      <PredictionsOnFormSubmission />
+      <ApartmentResult />
+    </>
+  );
 };
 
 export default ApartmentsScreen;
