@@ -24,7 +24,12 @@ class ApartmentPostSchema(Schema):
     cost = fields.Float()
     is_rented = fields.Boolean()
     address = fields.Nested(AddressSchema)
-    landlord_id = fields.Str()
+    description = fields.Str()
+    landlord_id = fields.Int()
+
+
+class ApartmentPatchSchema(ApartmentPostSchema):
+    id = fields.Int()
 
 
 class ApartmentGetSchema(Schema):
@@ -33,10 +38,12 @@ class ApartmentGetSchema(Schema):
     area = fields.Float()
     cost = fields.Float()
     is_rented = fields.Boolean()
+    description = fields.Str()
     contract = fields.Nested(ContractListSchema)
     address = fields.Nested(AddressListSchema)
     landlord_id = fields.Int()
     tenant_id = fields.Int()
+    created_at = fields.DateTime(format="timestamp")
     # photo = fields.Nested(ApartmentPhotoSchema)
 
 

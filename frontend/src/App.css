@@ -19,15 +19,22 @@ html {
   font-size: 18px;
 }
 
-footer {
-  bottom: 0;
-  width: 100%;
-  justify-content: center;
-  padding: 5px;
-  background-color: #6e4d8f;
-  color: #cdcbdf;
-  height: 100px;
-  cursor: default;
+.area {
+  display: flex;
+}
+
+.area span {
+  padding-right: 5px;
+}
+
+.address {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.city {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .button {

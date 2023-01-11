@@ -77,6 +77,7 @@ class Apartment(db.Model):
     room_count = db.Column(db.Integer, nullable=False)
     area = db.Column(db.Float, nullable=False)
     cost = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.Text, nullable=True)
     is_rented = db.Column(db.Boolean, nullable=False, default=False)
 
     tenant_id = db.Column(db.Integer, db.ForeignKey('tenant.id'), nullable=True)

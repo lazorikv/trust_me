@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import usePlacesAutocomplete from "./use-places-autocomplite";
+import { useDispatch } from "react-redux";
+import { searchApartments } from "../../features/apartment/apartmentAction";
+import ApartmentResult from "./ApartmentResult";
 
 export default function PredictionsOnInputChange() {
   const [selectedPrediction, setSelectedPrediction] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const predictions = usePlacesAutocomplete(searchValue);
   const [openSearch, setOpenSearch] = useState(false);
-  const [placeToSearch, setPlaceToSearch] = useState(null);
+  const [placeToSearch, setPlaceToSearch] = useState("");
   const catMenu = useRef(null);
+  const dispatch = useDispatch();
 
   const handlePredictionSelection = (e, prediction) => {
     e.preventDefault();
@@ -19,6 +23,14 @@ export default function PredictionsOnInputChange() {
   const submitSelection = () => {
     setPlaceToSearch(selectedPrediction);
   };
+
+  useEffect(() => {
+    if (placeToSearch !== null) {
+      let currentPage = 1;
+      let city = placeToSearch?.structured_formatting?.main_text;
+      dispatch(searchApartments({ city, currentPage }));
+    }
+  }, [placeToSearch]);
 
   const handleEnter = (e) => {
     setSearchValue(e.target.value);
@@ -73,11 +85,7 @@ export default function PredictionsOnInputChange() {
           <button onClick={submitSelection}>Submit</button>
         </div>
       </div>
-
-      <h3>
-        You selected:{" "}
-        {placeToSearch?.structured_formatting?.main_text || "None"}
-      </h3>
+      <ApartmentResult city={placeToSearch?.structured_formatting?.main_text} />
     </>
   );
 }
