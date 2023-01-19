@@ -1,9 +1,10 @@
 from flask import Blueprint, make_response, jsonify, request
 from sqlalchemy import desc, asc
+from sqlalchemy.sql.expression import func
 from app import db
-from app.apartment.schemas import ApartmentPostSchema, ApartmentListSchema, ApartmentPatchSchema
+from app.apartment.schemas import ApartmentPostSchema, ApartmentListSchema, ApartmentGetSchema, ApartmentPatchSchema
 from app.auth.utils import token_required
-from app.models import Landlord, Apartment, Contract, Address
+from app.models import Landlord, Apartment, Contract, Address, ApartmentPhoto
 
 mod = Blueprint('apartments', __name__, url_prefix='/apartment')
 
@@ -27,6 +28,7 @@ def apartment_func(current_user):
             area = data.get("area", None)
             cost = data.get("cost", None)
             description = data.get("description", None)
+            title = data.get("title", None)
             is_rented = data.get("is_rented", False)
             address_data = data.get("address", None)
 
@@ -38,7 +40,7 @@ def apartment_func(current_user):
 
             db.session.add(address)
             db.session.commit()
-            apartment = Apartment(floor=floor, room_count=room_count, area=area, cost=cost, is_rented=is_rented,
+            apartment = Apartment(floor=floor, title=title, room_count=room_count, area=area, cost=cost, is_rented=is_rented,
                                   address_id=address.id, landlord_id=current_user.id, description=description)
             db.session.add(apartment)
 
@@ -46,13 +48,13 @@ def apartment_func(current_user):
             return ApartmentListSchema().dump(apartment)
 
 
-@mod.route("/<apartment_id>", methods=["PATCH", "DELETE"])
+@mod.route("/<apartment_id>", methods=["GET", "PATCH", "DELETE"])
 @token_required
 def apart_func(current_user, apartment_id):
     method = request.method
     apartment = Apartment.query.filter_by(id=apartment_id).first()
     if method in ('GET',):
-        return ApartmentListSchema().dump(apartment)
+        return ApartmentGetSchema().dump(apartment)
     elif method in ('DELETE',):
         contracts = Contract.query.filter_by(id=apartment.contract.id)
         for contract in contracts:
@@ -115,8 +117,16 @@ def apartment_search():
     args = request.args
     city = args.get("city")
     page = args.get("page", 1)
+    sorting = args.get("sorting", None)
     per_page = 10
-    apartment = Apartment.query.order_by(asc(Apartment.cost))
+    total = 0
+    apartment = Apartment.query
+    if sorting == "asc":
+        apartment = Apartment.query.order_by(asc(Apartment.cost))
+    elif sorting == "desc":
+        apartment = Apartment.query.order_by(desc(Apartment.cost))
+    elif sorting == "newest":
+        apartment = Apartment.query.order_by(desc(Apartment.created_at))
     if city:
         apartment = apartment.join(Address).filter(Address.city == city)
     if page:
@@ -124,3 +134,10 @@ def apartment_search():
         apartment = apartment.paginate(page=int(page), per_page=per_page, error_out=False)
 
     return make_response({"apartments": ApartmentListSchema(many=True).dump(apartment), "total": total})
+
+
+@mod.route("/recommendations", methods=["GET"])
+def recommendations():
+    apartments = Apartment.query.order_by(func.random()).limit(3).all()
+    return ApartmentListSchema(many=True).dump(apartments)
+

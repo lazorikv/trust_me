@@ -13,7 +13,7 @@ class TenantPostSchema(Schema):
 
 class TenantGetSchema(TenantPostSchema):
 
-    apartment = fields.Nested(ApartmentListSchema)
+    apartment = fields.Nested(ApartmentListSchema, exclude=("tenant",))
     contract = fields.Nested(ContractTenantSchema)
     created_at = fields.Str()
     updated_at = fields.Str()

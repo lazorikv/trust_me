@@ -4,6 +4,7 @@ import {
   getApartment,
   getAllApartments,
   searchApartments,
+  recommendationApartments,
 } from "./apartmentAction";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   createApart: [],
   getApartById: [],
   searchApartment: [],
+  recApartment: [],
   total: null,
   error: null,
   success: false,
@@ -41,7 +43,7 @@ const apartmentSlice = createSlice({
     },
     [getApartment.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.getApartById.push(payload);
+      state.getApartById = payload;
     },
     [getApartment.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -71,6 +73,19 @@ const apartmentSlice = createSlice({
       state.total = payload.total;
     },
     [searchApartments.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
+    //recommendations
+    [recommendationApartments.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [recommendationApartments.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.recApartment = payload;
+    },
+    [recommendationApartments.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
     },

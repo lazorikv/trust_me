@@ -78,6 +78,7 @@ class Apartment(db.Model):
     area = db.Column(db.Float, nullable=False)
     cost = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=True)
+    title = db.Column(db.Text, nullable=True)
     is_rented = db.Column(db.Boolean, nullable=False, default=False)
 
     tenant_id = db.Column(db.Integer, db.ForeignKey('tenant.id'), nullable=True)
@@ -134,7 +135,7 @@ class ApartmentPhoto(db.Model):
     url = db.Column(db.String(255), nullable=False)
     apartment_id = db.Column(db.Integer, db.ForeignKey("apartment.id"), nullable=True)
 
-    def delete_photos(self):
+    def delete_photo(self):
         old_filename = self.url.split(".com/")[-1]
-        bucket.delete_folder(old_filename)
+        bucket.delete_file(key=old_filename)
         return "Success"

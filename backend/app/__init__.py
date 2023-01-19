@@ -1,8 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
 from config import config
-
 from app.s3 import AwsBucketApi
 
 db = SQLAlchemy()
@@ -13,7 +11,6 @@ def create_app(config_name):
     """For to use dynamic environment"""
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-
     db.init_app(app)
 
     # Import a module / component using its blueprint handler variable

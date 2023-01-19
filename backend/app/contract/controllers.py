@@ -22,12 +22,12 @@ def contract_func(current_user):
         return result
     elif method in ('POST',):
         if "contract_file" not in request.files:
-            return "No contract_file key in request.files"
+            return "No contract_file key in request.files", 400
 
         file = request.files["contract_file"]
 
         if file.filename == "":
-            return "Please select a file"
+            return "Please select a file", 400
 
         file.filename = secure_filename(file.filename)
         file.filename = f"contracts/{current_user.id}/{file.filename}"
@@ -84,3 +84,11 @@ def contract_part_func(current_user, contract_id):
             contract.landlord_id = landlord_id
         return ContractListSchema().dump(contract)
 
+
+@mod.route("/<apartment_id>/contract")
+@token_required
+def apartmnet_contract_byID(current_user, apartment_id):
+    if apartment_id:
+        contract = Contract.query.filter_by(apartment_id=apartment_id).all()
+        return ContractListSchema(many=True).dump(contract)
+    return make_response({"error": "Provide apartment_id"}, 400)

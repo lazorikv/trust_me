@@ -27,8 +27,9 @@ export default function PredictionsOnInputChange() {
   useEffect(() => {
     if (placeToSearch !== null) {
       let currentPage = 1;
+      let sortingValue = "";
       let city = placeToSearch?.structured_formatting?.main_text;
-      dispatch(searchApartments({ city, currentPage }));
+      dispatch(searchApartments({ city, currentPage, sortingValue }));
     }
   }, [placeToSearch]);
 

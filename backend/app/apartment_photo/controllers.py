@@ -4,6 +4,7 @@ from app import bucket
 from app.apartment_photo.schemas import ApartmentPhotoListSchema, ApartmentPhotoCutSchema, ApartmentPhotoPatchSchema
 from app.models import Landlord, Apartment, ApartmentPhoto
 from app.auth.utils import token_required
+from app.utils import save_data_s3
 
 from werkzeug.utils import secure_filename
 
@@ -22,24 +23,20 @@ def photo_func(current_user):
         return result
     elif method in ('POST',):
         if "photo_files" not in request.files:
-            return "No photo_files key in request.files"
+            return "No photo_files key in request.files", 400
 
         files = request.files.getlist("photo_files")
 
         if len(files) == 0:
-            return "Please select a files"
+            return "Please select a files", 400
 
         for file in files:
-            file.filename = secure_filename(file.filename)
-            file.filename = f"photos/{current_user.id}/{file.filename}"
-            bucket.upload_file_to_s3(file)
-
-        url = f"https://lazoryktrust.s3.us-east-1.amazonaws.com/photos/{current_user.id}"
-
-        photos = ApartmentPhoto(url=url, apartment_id=request.form["apartment_id"])
-        db.session.add(photos)
-        db.session.commit()
-        return ApartmentPhotoListSchema().dump(photos)
+            url = save_data_s3(file, current_user)
+            photos = ApartmentPhoto(url=url, apartment_id=request.form["apartment_id"])
+            db.session.add(photos)
+            db.session.commit()
+        photo_apartment = ApartmentPhoto.query.filter_by(apartment_id=request.form["apartment_id"]).all()
+        return ApartmentPhotoListSchema(many=True).dump(photo_apartment)
 
 
 @mod.route('/<photos_id>', methods=['PATCH', 'GET', 'DELETE'])
@@ -63,18 +60,23 @@ def contract_part_func(current_user, photos_id):
         if url:
             photos.url = url
         else:
-            photos.delete_photos()
+            photos.delete_photo()
             files = request.files.getlist("photo_files")
             if files:
                 for file in files:
-                    file.filename = secure_filename(file.filename)
-                    file.filename = f"photos/{current_user.id}/{file.filename}"
-                    bucket.upload_file_to_s3(file)
-                url = f"https://lazoryktrust.s3.us-east-1.amazonaws.com/photos/{current_user.id}/"
-                photos.url = url
+                    url = save_data_s3(file, current_user)
+                    photos.url = url
 
         if apartment_id:
             photos.apartment_id = apartment_id
 
         return ApartmentPhotoListSchema().dump(photos)
 
+
+@mod.route("/<apartment_id>/photos")
+@token_required
+def apartmnet_photo_byID(current_user, apartment_id):
+    if apartment_id:
+        photos = ApartmentPhoto.query.filter_by(apartment_id=apartment_id).all()
+        return ApartmentPhotoListSchema(many=True).dump(photos)
+    return make_response({"error": "Provide apartment_id"}, 400)

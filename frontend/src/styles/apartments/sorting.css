@@ -1,0 +1,37 @@
+.dropDown {
+  margin-top: 50px;
+  margin-left: 30px;
+}
+
+.dropDown p {
+  border: 1px solid #6e4d8f;
+  border-radius: 5px;
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #6e4d8f;
+  padding-top: 8px;
+  color: #cdcbdf;
+  cursor: pointer;
+}
+
+.dropDown p:hover {
+  background: #ae81db;
+  color: #6e4d8f;
+}
+
+.dropDown li {
+  z-index: 1;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #6e4d8f;
+  background: #ffffff;
+  cursor: pointer;
+  padding-top: 4px;
+  text-indent: 6px;
+}
+
+.dropDown li:hover {
+  background: #cdcbdf;
+}

@@ -3,7 +3,7 @@
 import os
 import unittest
 import uuid
-
+from app.models import Apartment
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from werkzeug.security import generate_password_hash
@@ -28,7 +28,12 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def hello():
     """say hello for testing"""
-    print('hello')
+    photos = Apartment.query.filter_by(id=1).first().photo.all()
+    print(photos)
+    for item in Apartment.query.all():
+        item.photo = photos
+        db.session.add(item)
+        db.session.commit()
 
 
 @manager.command

@@ -15,6 +15,5 @@ class ApartmentPhotoPatchSchema(Schema):
 
 class ApartmentPhotoListSchema(ApartmentPhotoCutSchema):
 
-    apartment_id = fields.Int()
     created_at = fields.Str()
     updated_at = fields.Str()

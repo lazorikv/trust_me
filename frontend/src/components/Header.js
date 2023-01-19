@@ -37,7 +37,7 @@ const Header = () => {
   const handleDropDown = (item) => {
     if (item === "Profile") {
       setOpen(false);
-      navigate("/user-profile");
+      navigate("/user-profile/");
     } else if (item === "Log Out") {
       dispatch(logout());
       setOpen(false);
@@ -51,18 +51,16 @@ const Header = () => {
         <img
           className="logo"
           onClick={() => navigate("/")}
-          src="main_logo.jpg"
+          src="/main_logo.jpg"
           alt="Logo"
         />
         <div className="navigation">
-          <NavLink to="/apartments">Apartments</NavLink>
-          <NavLink to="/">Text</NavLink>
-          <NavLink to="/">Text</NavLink>
+          <NavLink to="/apartments/">Apartments</NavLink>
         </div>
         {userToken ? (
           <div className="userIcon">
             <div ref={catMenu} className="dropdown">
-              <img onClick={handleOpen} src="usericon.png" alt="UserIcon" />
+              <img onClick={handleOpen} src="/usericon.png" alt="UserIcon" />
               {open ? (
                 <ul className="menu">
                   {menuItems.map((item) => (
@@ -81,7 +79,7 @@ const Header = () => {
           </div>
         ) : (
           <div className="userIcon">
-            <NavLink className="button" to="/login">
+            <NavLink className="button" to="/login/">
               Login
             </NavLink>
           </div>

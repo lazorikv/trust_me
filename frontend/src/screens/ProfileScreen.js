@@ -1,10 +1,8 @@
-import { useSelector } from 'react-redux'
-import '../styles/profile.css'
+import { useSelector } from "react-redux";
+import "../styles/profile.css";
 
 const ProfileScreen = () => {
-
-
-  const { userInfo } = useSelector((state) => state.user)
+  const { userInfo } = useSelector((state) => state.user);
   return (
     <div>
       <figure>{userInfo.first_name}</figure>
@@ -13,6 +11,6 @@ const ProfileScreen = () => {
         because you're logged in
       </span>
     </div>
-  )
-}
-export default ProfileScreen
+  );
+};
+export default ProfileScreen;

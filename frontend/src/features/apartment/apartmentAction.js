@@ -35,7 +35,8 @@ export const createApartment = createAsyncThunk(
 
 export const getApartment = createAsyncThunk(
   "apartment/fetch",
-  async ({ id }, rejectWithValue) => {
+  async (data, rejectWithValue) => {
+    const { apartment_id } = data;
     try {
       const userToken = localStorage.getItem("userToken")
         ? localStorage.getItem("userToken")
@@ -49,7 +50,7 @@ export const getApartment = createAsyncThunk(
         },
         withCredentials: false,
       };
-      const { data } = await axios.get(`apartment/${id}`, config);
+      const { data } = await axios.get(`/apartment/${apartment_id}`, config);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -77,7 +78,7 @@ export const getAllApartments = createAsyncThunk(
         },
         withCredentials: false,
       };
-      const { data } = await axios.get(`apartment`, config);
+      const { data } = await axios.get(`/apartment`, config);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -92,7 +93,7 @@ export const getAllApartments = createAsyncThunk(
 export const searchApartments = createAsyncThunk(
   "apartments/search",
   async (data, rejectWithValue) => {
-    const { city, currentPage } = data;
+    const { city, currentPage, sortingValue } = data;
     try {
       const userToken = localStorage.getItem("userToken")
         ? localStorage.getItem("userToken")
@@ -105,9 +106,37 @@ export const searchApartments = createAsyncThunk(
           "x-access-token": userToken,
         },
         withCredentials: false,
-        params: { city: city, page: currentPage },
+        params: { city: city, page: currentPage, sorting: sortingValue },
       };
-      const { data } = await axios.get(`apartment/search`, config);
+      const { data } = await axios.get(`/apartment/search`, config);
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const recommendationApartments = createAsyncThunk(
+  "apartments/recommendation",
+  async ({}, rejectWithValue) => {
+    try {
+      const userToken = localStorage.getItem("userToken")
+        ? localStorage.getItem("userToken")
+        : null;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": userToken,
+        },
+        withCredentials: false,
+      };
+      const { data } = await axios.get(`/apartment/recommendations`, config);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {

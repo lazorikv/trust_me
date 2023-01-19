@@ -52,6 +52,8 @@ class DevelopmentConfig(Config):
     S3_KEY = "AKIAQGAJE5MV4P22XF4O"
     S3_SECRET = "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"
     S3_LOCATION = 'http://{}.s3.amazonaws.com/'.format(S3_BUCKET)
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 
 class APIConfig(Config):
